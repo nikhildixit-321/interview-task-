@@ -5,6 +5,7 @@ const loginRouter = require("./routes/login")
 const signupRouter = require("./routes/signup")
 const taskRouter = require("./routes/tasks")
 const connectDB = require("./config/db")
+const errorHandler = require("./middleware/error")
 
 const app = express();
 
@@ -28,6 +29,8 @@ app.use('/tasks', taskRouter)
 app.get('/', (req, res) => {
     res.send("Hello World");
 })
+
+app.use(errorHandler);
 
 
 
