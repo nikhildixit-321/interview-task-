@@ -1,21 +1,21 @@
-// yaha token bnata hai ya check kiya jata hai
 const jwt = require('jsonwebtoken')
-const secrate = 'nikhil'
+
+const secret = process.env.JWT_SECRET || 'nikhil'
 
 const createToken = (user) => {
-      
-      const payload = {
-        id: user._id,
-        email:user.email
-      }
+  const payload = {
+    id: user._id,
+    email: user.email
+  }
 
-    return jwt.sign(payload, secrate, { expiresIn: '1h' });
+  return jwt.sign(payload, secret, { expiresIn: '1h' });
 }
-const  validateToken = (token)=>{
-    const payload = jwt.verify(token, secrate);
-    return payload
+
+const validateToken = (token) => {
+  return jwt.verify(token, secret);
 }
-module.exports ={
-    validateToken,
-    createToken
+
+module.exports = {
+  validateToken,
+  createToken
 }

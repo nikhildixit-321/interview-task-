@@ -1,10 +1,21 @@
 const express = require("express")
 const router = express.Router();
 const User = require("../models/user")
-router.post('/', async (req, res) => {
-    const { fullName, email, password } = req.body;
-    await User.create({ fullName, email, password })
-    res.json({ message: "Registration successful" })
-})
+
+const signup = async (req, res, next) => {
+    try {
+        const { fullName, name, email, password } = req.body;
+
+        await User.create({ fullName: fullName || name, email, password })
+        res.status(201).json({ message: "Registration successful" })
+    } catch (error) {
+        next(error);
+    }
+}
+
+router.post('/', signup)
+router.post('/register', signup)
+
+router.signup = signup;
 
 module.exports = router;

@@ -3,7 +3,9 @@ const express = require("express")
 const cors = require('cors')
 const loginRouter = require("./routes/login")
 const signupRouter = require("./routes/signup")
+const taskRouter = require("./routes/tasks")
 const connectDB = require("./config/db")
+
 const app = express();
 
 
@@ -16,10 +18,13 @@ connectDB();
 
 app.use('/auth/login', loginRouter)
 app.use('/auth/signup', signupRouter)
+app.post('/auth/register', signupRouter.signup)
+app.use('/tasks', taskRouter)
 
 app.get('/', (req, res) => {
     res.send("Hello World");
 })
+
 
 
 
