@@ -1,0 +1,28 @@
+require('dotenv').config()
+const express = require("express")
+const cors = require('cors')
+const loginRouter = require("./routes/login")
+const signupRouter = require("./routes/signup")
+const connectDB = require("./config/db")
+const app = express();
+
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
+
+
+connectDB();
+
+app.use('/auth/login', loginRouter)
+app.use('/auth/signup', signupRouter)
+
+app.get('/', (req, res) => {
+    res.send("Hello World");
+})
+
+
+
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+}); 
